@@ -488,8 +488,8 @@ THANK YOU @karoub, @guillaumesalva, @gautie_a, @julienbarbier42, @0xAuntyBetty a
 So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we found clue 3, which is `baguette`, but for those who still would like to see what it looks like in the browser here it is (entering it on either the username, password field or both fields works fine)
 
 <!-- ![Clue 3](./assets/img/baguette.jpg) -->
-<div class="level-screenshots">
-	<img src="./assets/img/baguette.jpg" alt="Clue 3">
+<div class="level-screenshots" style="width: 70%;padding: 0 1% 0 1%;margin-left: 12.5%;">
+	<img style="margin-left: 2%;" src="./assets/img/baguette.jpg" alt="Clue 3">
 </div>
 
 That was all for clue 3, thank you for reading thus far my friend
