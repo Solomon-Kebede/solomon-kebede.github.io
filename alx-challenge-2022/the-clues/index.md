@@ -48,6 +48,8 @@
 
 </style>
 
+*`I would like to thank the Lord Jesus Christ, for God is the giver of wisdom, understanding and everything. I would like to thank the team at ALX for giving me the opportunity to be part of the community and grow. I would like to thank Julien for giving me the idea to even write this blog. I finally would like to thank my family, friends and everyone for their support.`*
+
 How you can solve Game 3 of the \#ALXchallenge2022
 ---
 
