@@ -4,6 +4,12 @@
 		margin-right: 12.5%;
 	}*/
 
+	code {
+	/*background-color: #232323;*/
+	/*color: goldenrod;*/
+	/*border: green 1px solid;*/
+	}
+
 	.level-screenshots {
 	padding: 5px;
 	border: #975713 1px solid;
@@ -12,13 +18,8 @@
 	display: flex;
 	margin-bottom: 20px;
 	}
-	code {
-	/*background-color: #232323;*/
-	/*color: goldenrod;*/
-	/*border: green 1px solid;*/
-	}
 
-	#frida-trace-result {
+	.img-snippet {
 		margin-bottom: 20px;
 		width: 80%;
 		margin-left: 5%;
@@ -26,16 +27,23 @@
 		border-radius: 5px;
 	}
 
-	#frida-trace-img1 {
-		border-radius:  10px;
-	}
-
 	.level5-decoded {
 		border: #975713 0px;
 	}
 
-	#level5-decoded-img {
+	.curved-edge {
 		border-radius: 10px;
+	}
+
+	#devtools {
+		border: 2px solid black;
+		border-bottom-width: 4px;
+	}
+
+	.level7-prep {
+		border: 1px solid goldenrod !important;
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 0px;
 	}
 
 </style>
@@ -45,7 +53,10 @@ How you can solve Game 3 of the \#ALXchallenge2022
 
 This twitter feed came up, I was stuck at Level 23 by the time I saw this 
 
-![Aunty Betty Tweet](./assets/img/game-in-game.png)
+<!-- ![Aunty Betty Tweet](./assets/img/game-in-game.png) -->
+<div class="img-snippet">
+	<img class="curved-edge" src="./assets/img/game-in-game.png" alt="Aunty Betty Tweet">
+</div>
 
 So as we can see from the tweet, the clue can be found some where inside the domain [`venicodivici.co`](venicodivici.co)
 
@@ -199,8 +210,8 @@ $ frida-trace ./crackmeclue3 thismaybethepassword -i strcmp
 We are using `frida-trace` to run `crackmeclue3` with the argument `thismaybethepassword` as our password and we are using the `-i` flag to include the function `strcmp`, which we would like to trace (we are assuming here that `strcmp` is used to check if the password is actually correct) and we get the following
 
 <!-- ![frida-trace-result](./assets/img/frida-trace-result.jpg) -->
-<div id="frida-trace-result">
-	<img id="frida-trace-img1" src="./assets/img/frida-trace-result.jpg" alt="frida-trace-result">
+<div class="img-snippet">
+	<img class="curved-edge" src="./assets/img/frida-trace-result.jpg" alt="frida-trace-result">
 </div>
 
 `frida-trace` generates a function handler file `strcmp.js` inside the path `./__handlers__` if the `strcmp` function is found (which it is and is also part of `libc-2.33.so` shared library) and the handler by default logs what the arguments are and how long it took to trace the function, it took `90ms` on my machine. We can also see the string I passed as a password and the string it compared it with (which is the actual password we want). The program returns an error message `Try again` since we passed in an incorrect password.
@@ -223,7 +234,7 @@ When I first saw this, I initially thought it was morse code, but a quick google
 
 <!-- ![Level 5 Decoded](./assets/img/level5-decoded.png) -->
 <div class="level-screenshots level5-decoded">
-	<img id="level5-decoded-img" src="./assets/img/level5-decoded.png" alt="Level 5 Decoded">
+	<img class="curved-edge" src="./assets/img/level5-decoded.png" alt="Level 5 Decoded">
 </div>
 
 Our next endpoint: [`http://venicodivici.co/57364n0.html` ](http://venicodivici.co/57364n0.html)
@@ -304,11 +315,17 @@ I first tried the single quote chatacter `'` only on the username field and this
 
 After trying out different SQL injection commands that came to my mind, I got bored and a day or so later I asked [Julien](https://twitter.com/julienbarbier42) wanting to know if the level was over (I assumed it was) and he responded as follows and it some what reinvigorated me to keep on trying.
 
-![Reinvigorated to login](./assets/img/level7-notover.jpg)
+<!-- ![Reinvigorated to login](./assets/img/level7-notover.jpg) -->
+<div class="img-snippet">
+	<img class="curved-edge" src="./assets/img/level7-notover.jpg" alt="Reinvigorated to login">
+</div>
 
 I went on google to find a `list of SQL Injection payloads` and I grabbed the first result that came up
 
-![google-result-on-sql-injection-payloads](./assets/img/google-result.png)
+<!-- ![google-result-on-sql-injection-payloads](./assets/img/google-result.png) -->
+<div class="img-snippet">
+	<img class="curved-edge" src="./assets/img/google-result.png" alt="google-result-on-sql-injection-payloads">
+</div>
 
 The [SQL Injection Payload List](https://github.com/payloadbox/sql-injection-payload-list) repo had a list of different kinds of injection attacks
 
@@ -318,18 +335,30 @@ I then use the network debugger inside developer tools to remake the request (I'
 
 Open Developer tools by pressing `Ctrl + Shift + I` and navigate to the `Network tab` and enable network log persitance (Persist Logs in Firefox and Preserve Log in Chrome)
 
-![Level 7 Devtools](./assets/img/level7-devtools.jpg)
+<!-- ![Level 7 Devtools](./assets/img/level7-devtools.jpg) -->
+<img class="curved-edge" id="devtools" src="./assets/img/level7-devtools.jpg" alt="Level 7 Devtools">
 
 We then make a request to the server. I made a request with a username of `test` and I left the password field empty, when I clicked on the Login button
 some requests got logged
 
-![Logged Requests](./assets/img/logged-requests.jpg)
+<!-- ![Logged Requests](./assets/img/logged-requests.jpg) -->
+<div class="img-snippet">
+	<img class="curved-edge" src="./assets/img/logged-requests.jpg" alt="Logged Requests">
+</div>
 
 The one we are interested in is, the first request which has a status code `200 OK`, it's also a `POST` request, which is most of the time used to send data to the server, the request headers and request payloads are as follows
 
-![Level 7 Headers](./assets/img/level7-headers.jpg)
+<!-- ![Level 7 Headers](./assets/img/level7-headers.jpg) -->
+<!-- ![Level 7 Request Payload](./assets/img/level7-request_payload.jpg) -->
 
-![Level 7 Request Payload](./assets/img/level7-request_payload.jpg)
+<div class="img-snippet" style="display: flex;">
+    <div style="margin-right: 5px;">
+        <img class="curved-edge level7-prep" src="./assets/img/level7-headers.jpg" alt="Level 7 Headers">
+    </div>
+    <div style="margin-left: 5px;">
+        <img class="curved-edge level7-prep" src="./assets/img/level7-request_payload.jpg" alt="Level 7 Request Payload">
+    </div>
+</div>
 
 Combining all this into a python script, we get the following, the reason I have used the `aiohttp` library instead of the usual `requests` is because I was expecting to make requests of the entire SQL Injection Payloads List, we saw earlier and with that scale requests is very slow
 
@@ -458,6 +487,9 @@ THANK YOU @karoub, @guillaumesalva, @gautie_a, @julienbarbier42, @0xAuntyBetty a
 ```
 So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we found clue 3, which is `baguette`, but for those who still would like to see what it looks like in the browser here it is (entering it on either the username, password field or both fields works fine)
 
-![Clue 3](./assets/img/baguette.jpg)
+<!-- ![Clue 3](./assets/img/baguette.jpg) -->
+<div class="level-screenshots">
+	<img src="./assets/img/baguette.jpg" alt="Clue 3">
+</div>
 
 That was all for clue 3, thank you for reading thus far my friend
