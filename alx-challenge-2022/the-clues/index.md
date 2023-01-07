@@ -1,8 +1,8 @@
 <style>
-	body {
+	/*body {
 		margin-left: 12.5%;
 		margin-right: 12.5%;
-	}
+	}*/
 
 	.level-screenshots {
 	padding: 5px;
@@ -12,15 +12,10 @@
 	display: flex;
 	margin-bottom: 20px;
 	}
-
-	.width1 {
-		/*width: 90%;*/
-	}
-
 	code {
 	/*background-color: #232323;*/
 	/*color: goldenrod;*/
-	border: green 1px solid;
+	/*border: green 1px solid;*/
 	}
 
 	#frida-trace-result {
