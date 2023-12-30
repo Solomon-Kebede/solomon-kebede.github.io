@@ -1,3 +1,5 @@
+<title>How you can solve for Clue 3 in Game 3 of the #ALXchallenge2022</title>
+
 <style>
 	/*body {
 		margin-left: 12.5%;
