@@ -505,3 +505,9 @@ So our SQL payload password becomes `admin'or 1=1 or ''='`, we can also see we f
 </div>
 
 That was all for clue 3, thank you for reading thus far my friend :)
+
+<hr>
+
+# Other Articles
+
+<a href="/alx-challenge-2022/blog/what-success-requires-solomon-kebede/index.md">What It Takes to Succeed as a Software Engineer: Spotlight on Solomon Kebede, 2022 ALX SE Challenge Winner (Unabridged Version)</a>
