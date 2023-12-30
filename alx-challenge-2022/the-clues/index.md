@@ -512,4 +512,4 @@ That was all for clue 3, thank you for reading thus far my friend :)
 
 # Other Articles
 
-<a href="/alx-challenge-2022/blog/what-success-requires-solomon-kebede/index.md">What It Takes to Succeed as a Software Engineer: Spotlight on Solomon Kebede, 2022 ALX SE Challenge Winner (Unabridged Version)</a>
+<a href="/alx-challenge-2022/blog/what-success-requires-solomon-kebede/">What It Takes to Succeed as a Software Engineer: Spotlight on Solomon Kebede, 2022 ALX SE Challenge Winner (Unabridged Version)</a>
