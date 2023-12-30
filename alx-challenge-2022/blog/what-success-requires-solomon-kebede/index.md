@@ -32,7 +32,7 @@
 
 <h2 class="wp-block-heading">What motivated you to join the ALX Software Engineering Programme?</h2>
 
-<p>I have a BSc in Civil and Environmental Engineering from the Addis Ababa University in Ethiopia. While waiting to receive my transcripts, two friends showed me a poster of the ALX programme on the Addis Ababa Institute of Technology campus. I had previously been looking for a way to further certify my degree through Software Engineering, and this seemed like the perfect opportunity. I thought it would be fun and also provide me with a good learning opportunity, so I gave it a shot, and here we are today.</p>
+<p>I have a BSc in Civil and Environmental Engineering from the Addis Ababa University in Ethiopia. While waiting to receive my transcripts, two friends showed me a poster of the ALX programme on the Addis Ababa Institute of Technology campus. I had previously been looking for a way to further certify my degree through Software Engineering, and this seemed like the perfect opportunity (I would call it an answered prayer). I thought it would be fun and also provide me with a good learning opportunity, so I gave it a shot, and here we are today.</p>
 
 <h2 class="wp-block-heading">What role did collaboration play in your learning experience?</h2>
 
@@ -126,7 +126,7 @@
 </div>
 
 
-<p>ALX has helped me realise that <a href="https://www.alxafrica.com/blog/be-prepared-to-give-your-all-alexandra-mizeros-charge-to-aspiring-alx-learners/" target="_blank" rel="noreferrer noopener">the most important things require you to do the hardest things</a>. I now feel I can learn new things and achieve new heights if I put my mind to it. Previously, I struggled with imposter syndrome, like many others, without knowing what it actually was. Now I know that there&#39;s no need to compare myself to others, because the context of our lives are different. What matters is that I continue to strive to be better than the previous versions of myself.&nbsp;</p>
+<p>ALX has helped me realise that <a href="https://www.alxafrica.com/blog/be-prepared-to-give-your-all-alexandra-mizeros-charge-to-aspiring-alx-learners/" target="_blank" rel="noreferrer noopener">the most important things require you to do the hardest things</a>. I can say ALX has made more humble and empathetic towards others. I now feel I can learn new things and achieve new heights if I put my mind to it. Previously, I struggled with imposter syndrome, like many others, without knowing what it actually was. Now I know that there's no need to compare myself to others, because the context of our lives are different. What matters is that I continue to strive to be better than the previous versions of myself.&nbsp;</p>
 
 
 
@@ -134,4 +134,4 @@
 
 
 
-<p>I was not the most brilliant student, and I had a hard time when I was at school at a younger age. Medically, I had challenges and faced a number of near-death experiences, but my faith has really seen me through to this point and given me hope of a bright future. I hope this encourages anyone who reads this that you can be successful, no matter what is holding you back.</p>
+<p>I was not the most brilliant student, and I had a hard time when I was at school at a younger age. Medically, I had challenges and faced a number of near-death experiences, but God has really taken me out of all of it and given me hope of a bright future. I hope this encourages anyone who reads this that you can be successful, no matter what is holding you back, if you walk with God. Jesus Christ is Lord and Savior!</p>
